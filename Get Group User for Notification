@@ -1,0 +1,12 @@
+var grp = new GlideRecord('sys_user_grmember');  
+grp.addQuery('group.name', 'PRWT HR Payroll') ; 
+grp.addQuery('user.email'); 
+grp.query(); 
+if (grp.next()) { 
+//gs.print('email' + grp.group.manager.email); 
+gs.print('email' + grp.user.email); 
+ 
+} 
+group.group.manager.email 
+ 
+ 
