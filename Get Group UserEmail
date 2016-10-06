@@ -1,0 +1,44 @@
+(function executeRule(current, previous /*null when async*/) { 
+ 
+ 
+var group = new GlideRecord('sys_user_grmember'); 
+group.addQuery('group.name', 'NY EzPass Project'); 
+group.addQuery('user.email'); 
+group.query(); 
+ 
+while (group.next()) 
+{ 
+ 
+} 
+ 
+var queryString = "workflow.name=WF-140 Image Prod^state=executing"; 
+var grCon = new GlideRecord('wf_context'); 
+ 
+grCon.addEncodedQuery(queryString); 
+grCon.query(); 
+if (grCon.next()) { 
+ 
+var workflow = new Workflow(); 
+var wfe= new GlideRecord('wf_workflow_execution'); 
+wfe.get(grCon.id); 
+var context = workflow.getContexts(wfe); 
+ 
+if (context.next()) { 
+ 
+var counter=context.scratchpad.count; 
+ 
+switch(counter) { 
+case 1: 
+//Second notice 
+gs.eventQueue('EZPass Upload', current, group.manager.email, group.user.email); 
+break; 
+default: 
+//First Notice 
+ 
+   gs.eventQueue('EZPass Upload', current, group.manager.email, gs.getUserName()); 
+} 
+ 
+}} 
+ 
+})(current, previous); 
+ 
