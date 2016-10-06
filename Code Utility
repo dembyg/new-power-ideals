@@ -1,0 +1,106 @@
+This works for specific days 
+ 
+ 
+deleteComputerRecords(); 
+function deleteComputerRecords(){ 
+var rec = new GlideRecord('u_prwt_profit_loss'); 
+var queryString ='sys_created_onONToday@javascript:gs.daysAgoStart(0)@javascript:gs.daysAgoEnd(0)'; 
+rec.addEncodedQuery(queryString);  
+//rec.addEncodedQuery('u_projectISEMPTY')); 
+rec.deleteMultiple(); 
+} 
+  
+ 
+u_date=NULL 
+sys_created_onON2016-08-12@javascript:gs.dateGenerate('2016-08-12','start')@javascript:gs.dateGenerate('2016-08-12','end') 
+sys_created_onONYesterday@javascript:gs.daysAgoStart(1)@javascript:gs.daysAgoEnd(1) 
+ 
+sys_created_onONYesterday@javascript:gs.daysAgoStart(1)@javascript:gs.daysAgoEnd(1) 
+ 
+deleteComputerRecords(); 
+function deleteComputerRecords(){ 
+var rec = new GlideRecord('u_prwt_profit_loss'); 
+// var queryString ='sys_created_onON2016-02-24@javascript:gs.dateGenerate('2016-02-24','00:00:00')@javascript:gs.dateGenerate('2016-02-24','23:59:59')'; 
+//rec.addEncodedQuery(queryString);  
+rec.addEncodedQuery('u_project=NULL'); 
+rec.deleteMultiple(); 
+} 
+ 
+ 
+u_project=NULL 
+ 
+sys_created_onONToday@javascript:gs.daysAgoStart(0)@javascript:gs.daysAgoEnd(0) 
+sys_created_onONToday@javascript:gs.daysAgoStart(0)@javascript:gs.daysAgoEnd(0) 
+ 
+deleteComputerRecords(); 
+function deleteComputerRecords(){ 
+     var rec = new GlideRecord('your_table'); 
+     rec.addQuery('sys_created_by',<get the user id>); 
+     rec.deleteMultiple(); 
+} 
+ 
+From <https://community.servicenow.com/thread/171038>  
+var pr = new GlideRecord('u_prwt_project'); 
+pr.addQuery('u_number', 137); 
+pr.query(); 
+pr.next();  
+ 
+var gr = new GlideRecord('u_prwt_profit_loss');   
+ 
+var queryString = 'sys_created_onONToday@javascript:gs.daysAgoStart(0)@javascript:gs.daysAgoEnd(0)^u_project=Washington'; 
+gr.addEncodedQuery(queryString );   
+gr.query();   
+while (gr.next()){  
+//gr.u_project.u_name = pr.u_name;   
+gr.u_project= pr.sys_id 
+gr.update();   
+gs.print("This record was updated" + pr.sys_id); 
+}  
+ 
+sys_created_onONToday@javascript:gs.daysAgoStart(0)@javascript:gs.daysAgoEnd(0)^u_projectISEMPTY 
+ 
+ 
+Aug 11 
+ 
+// Set the variable 'answer' to a comma-separated list of user or group sys_ids that you want the email sent to. 
+var grp = new GlideRecord('sys_group_has_role'); 
+grp.addQuery('group.name', 'NY EzPass Project') ; 
+grp.query(); 
+while(grp.next()){ 
+} 
+ 
+var gr = new GlideRecord("sys_user"); 
+gr.orderBy('fist_name'); 
+gr.addQuery('roles=140 Project Manager'); 
+gr.query(); 
+while(gr.next()) { 
+answer =  grp.group.manager.email +','+gr.email; 
+} 
+ 
+// Set the variable 'answer' to a comma-separated list of user or group sys_ids that you want the email sent to. 
+ 
+var grp = new GlideRecord('sys_user_grmember'); 
+grp.addQuery('group.name', 'PRWT HR Payroll') ; 
+grp.addQuery('user.email'); 
+grp.query(); 
+ 
+if (grp.next()) 
+{ 
+answer =  grp.user.email //+ ','+ grp.group.manager.email 
+//gs.print('answer' +answer); 
+} 
+ 
+0000000000000000000000000000 
+var group = new GlideRecord('sys_user_group'); 
+group.addQuery('name', ‘Philadelphia Tickets Project’); 
+group.setLimit(1); 
+group.query(); 
+if (group.next()) { 
+   if (gs.hasRoleInGroup('role_name', ‘111 Quality Supervisor’)) { 
+      gs.print('User has role in group');   
+   } else { 
+      gs.print('User does NOT have role in group'); 
+   }   
+} 
+ 
+ 
